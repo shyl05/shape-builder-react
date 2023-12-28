@@ -1,0 +1,39 @@
+.AppContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.Toolbar{
+  height: 100%;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+}
+
+.Toolbar-Content{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 !important;
+  padding-bottom: 20px !important;
+}
+
+.Canvas-Wrapper {
+  display: flex;
+  padding-left: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-content{
+  display: flex;
+  flex-direction: row;
+  margin-top: 80px;
+}
