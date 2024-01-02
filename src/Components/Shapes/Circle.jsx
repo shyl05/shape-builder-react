@@ -2,47 +2,78 @@ import React from "react";
 import { Circle as KonvaCircle, Transformer } from "react-konva";
 
 const Circle = React.forwardRef((props, ref) => {
-    const { properties, isSelected, onSelect, onTransform } = props;
+    const { properties, isSelected, onSelect, onTransform , viewer } = props;
     const trRef = React.useRef();
 
-    const _onChange = event => {
-        const shape = event.target;
-        onTransform({
-          x: shape.x(),
-          y: shape.y(),
-          width: shape.width() * shape.scaleX(),
-          height: shape.height() * shape.scaleY(),
-          rotation: shape.rotation(),
-          name: properties.name,
-          draggable: properties.draggable,
-        });
+    function rad(h){        
+        return (h / 2);
+    }
+
+    const _onChange = () => {
+        if(viewer === false){
+            const shape = ref.current;
+            onTransform({
+            x: shape.x(),
+            y: shape.y(),
+            width: shape.width() * shape.scaleX(),
+            height: shape.height() * shape.scaleY(),
+            radius: rad(shape.height() * shape.scaleY()),
+            rotation: shape.rotation(),
+            name: properties.name,
+            draggable: properties.draggable,
+            });
+        } else {
+            console.log("Read only mode active");
+        }
     };
 
     React.useEffect(() => {
-        if (isSelected) {
+        if (isSelected && viewer === false) {
           // we need to attach transformer manually
           trRef.current.nodes([ref.current]);
           trRef.current.getLayer().batchDraw();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isSelected]);
+    }, [isSelected, viewer]);
 
     return (
         <>
-            <KonvaCircle
-                ref={ref}
-                x={properties.x}
-                y={properties.y}
-                radius={properties.radius}
-                draggable={properties.draggable}
-                stroke={"black"}
-                scaleX={1}
-                scaleY={1}
-                onClick={onSelect}
-                onTransformEnd={_onChange}
-                onDragEnd={_onChange}
-            />
-            {isSelected && (
+            {viewer === false? (
+                <KonvaCircle
+                    ref={ref}
+                    x={properties.x}
+                    y={properties.y}
+                    width={properties.width}
+                    height={properties.height}
+                    radius={properties.radius}
+                    rotation={properties.rotation}
+                    draggable={properties.draggable}
+                    stroke={"black"}
+                    scaleX={1}
+                    scaleY={1}
+                    onClick={onSelect}
+                    onTransformEnd={_onChange}
+                    onTransform={_onChange}
+                    onDragMove={_onChange}
+                    onDragEnd={_onChange}
+                />
+            ) : (
+                <KonvaCircle
+                    ref={ref}
+                    x={properties.x}
+                    y={properties.y}
+                    width={properties.width}
+                    height={properties.height}
+                    radius={properties.radius}
+                    rotation={properties.rotation}
+                    stroke={"black"}
+                    scaleX={1}
+                    scaleY={1}
+                    onClick={onSelect}
+                    draggable={false}
+                />
+            )}
+            {isSelected && viewer === false?  (
                 <Transformer
                     ref={trRef}
                     flipEnabled={false}
@@ -54,6 +85,8 @@ const Circle = React.forwardRef((props, ref) => {
                         return newBox;
                     }}
                 />
+            ):(
+              null  
             )}
         </>
     );

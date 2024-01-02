@@ -12,19 +12,19 @@ const Canvas = (props) => {
     axios
     .put('http://localhost:7000/shapes/update', data)
     .then(res => {
-        dispatch(loadShapes(res.data));
+      dispatch(loadShapes(res.data));
     })
     .catch(error => {
       console.error(error);
     });
   };
 
-  const { canvasObjects } = props;
+  const { canvasObjects, viewer } = props;
   const [selectedId, setSelectedId] = React.useState(null);
   const data = useSelector((state)=> state.shapes.shapes);
 
-  const onSelectShape = (props) => {
-    console.log("Shape props", props)
+  const onSelectShape = (props, key) => {
+    setSelectedId(key);
     dispatch(getSelectedShape(props));
   }
 
@@ -54,9 +54,9 @@ const Canvas = (props) => {
                   }}  
                   isSelected={key === selectedId}
                   onSelect={() => {
-                    onSelectShape(shape);
-                    setSelectedId(key);
+                    onSelectShape(shape, key);
                   }}
+                  viewer={viewer}
                 />
               )}
           </Layer>

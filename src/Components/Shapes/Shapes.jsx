@@ -6,7 +6,7 @@ import Line from "./Line";
 import Star from "./Star";
 
 const Shapes = (props) => {
-    const { shape, isSelected, onSelect, onTransform } = props;
+    const { shape, isSelected, onSelect, onTransform, viewer } = props;
     const shapeRef = React.createRef();
     let random = Date.now();
 
@@ -19,6 +19,7 @@ const Shapes = (props) => {
                 onTransform={onTransform}
                 isSelected={isSelected}
                 onSelect={onSelect}
+                viewer={viewer}
             />
         );
     }
@@ -32,6 +33,7 @@ const Shapes = (props) => {
                 onTransform={onTransform}
                 isSelected={isSelected}
                 onSelect={onSelect}
+                viewer={viewer}
             />
         );
     }
@@ -45,6 +47,7 @@ const Shapes = (props) => {
                 onTransform={onTransform}
                 isSelected={isSelected}
                 onSelect={onSelect}
+                viewer={viewer}
             />
         );
     }
@@ -58,6 +61,7 @@ const Shapes = (props) => {
                 onTransform={onTransform}
                 isSelected={isSelected}
                 onSelect={onSelect}
+                viewer={viewer}
             />
         );
     }
@@ -71,6 +75,7 @@ const Shapes = (props) => {
                 onTransform={onTransform}
                 isSelected={isSelected}
                 onSelect={onSelect}
+                viewer={viewer}
             />
         );
     }
